@@ -1,0 +1,2 @@
+- https://github.com/sudhanshusingh-g/jira-ticket-clone
+- https://sudhanshusingh-g.github.io/jira-ticket-clone/
