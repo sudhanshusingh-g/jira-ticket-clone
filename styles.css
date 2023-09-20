@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700&display=swap');
+html{
+    scroll-behavior: smooth;
+    transition: all ease-in-out;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+
+header{
+    background-color: rgb(13, 119, 218);
+    color: whitesmoke;
+    padding: 1.2rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4rem;
+}
+.color-flags button{
+    border: none;
+    cursor: pointer;
+}
+.color-flags button:hover{
+    border: 2px solid whitesmoke;
+}
+.color-flags button:active{
+    box-shadow: inset;
+}
+.color-flags{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+.pink{
+    background-color: rgb(245, 85, 112);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+.green{
+    background-color: yellowgreen;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+.yellow{
+    background-color: orange;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+.black{
+    background-color: black;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+.actionIcons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+.fa-plus{
+    font-size: 2rem;
+    color: white;
+    padding: 0.4rem;
+    cursor: pointer;
+}
+.fa-plus:active{
+    box-shadow: 2px 2px 14px 1px #00000054;
+}
+.fa-trash{
+    font-size: 1.5rem;
+    color: white;
+    padding: 0.4rem;
+    cursor: pointer;
+}
+.fa-trash:active{
+    color: tomato;
+}
+.modalContainer{
+    position: absolute;
+    width: 45vw;
+    height: 60vh;
+    top: calc( ( 100vh - 50vh ) / 2 );
+    left: calc( ( 100vw - 45vw ) / 2 );
+    display: none;
+    justify-content: center;
+    border-radius: 1.2rem;
+    box-shadow: 2px 2px 14px 1px #00000054;
+}
+.modalDisplay{
+    display: flex;
+}
+textarea{
+    width: 80%;
+    border-radius: 1.2rem 0 0 1.2rem;
+    border: none;
+    outline: none;
+    resize: none;
+    background-color: wheat;
+    padding: 2rem;
+    height: 100%;
+    font-size: 2rem;
+}
+.modalColors{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 20%;
+    background-color: rgb(13, 119, 218);
+    border-radius: 0 1.2rem 1.2rem 0;
+    height: 100%;
+}
+.modalColors button{
+    border: none;
+}
+#defaultColor{
+    border: 2px solid whitesmoke;
+}
+.ticketContainer{
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+.ticket{
+    border-radius: 0.4rem;
+    width: 18vw;
+    height: 40vh;
+    box-shadow:1px 2px 2px 1px #00000054;
+    overflow: hidden;
+}
+.ticketColor{
+    height: 8%;
+    background-color: orange;
+}
+.ticketId{
+    margin: 0.4rem 0;
+    padding: 0 1rem;
+}
+.taskArea{
+    margin: 0.4rem 0;
+    padding: 0 1rem;
+    height: 62%;
+}
+.lock{
+    text-align: right;
+}
+.fa-lock{
+    color: rgba(82, 78, 78, 0.753);
+    font-size: 1.5rem;
+    padding: 0 1rem;
+    cursor: pointer;
+}
