@@ -76,15 +76,14 @@ header{
 .fa-plus:active{
     box-shadow: 2px 2px 14px 1px #00000054;
 }
-.fa-trash{
+.fa-trash-can{
     font-size: 1.5rem;
     color: white;
     padding: 0.4rem;
     cursor: pointer;
 }
-.fa-trash:active{
-    color: tomato;
-}
+
+
 .modalContainer{
     position: absolute;
     width: 45vw;
@@ -162,6 +161,12 @@ textarea{
 }
 .fa-lock,.fa-lock-open{
     color: rgba(82, 78, 78, 0.753);
+    font-size: 1.5rem;
+    padding: 0 1rem;
+    cursor: pointer;
+}
+.fa-trash{
+    color: red;
     font-size: 1.5rem;
     padding: 0 1rem;
     cursor: pointer;

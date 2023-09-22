@@ -55,12 +55,35 @@ function createTicket(ticketColor,taskValue,ticketID){
                 </div>
     `;
     mainTicketContainer.appendChild(ticket);
-
+    
+    deleteTicket(ticket);
     handleLock(ticket);
+    handleColor(ticket);
 }
 
 // When clicked on ticket color the color should be changed randomly : Use Math.random value
+// Math.random did not worked out
 
+// So moving forward with for loop method
+function handleColor(ticket){
+    let colorDiv=ticket.querySelector(".ticketColor");
+    colorDiv.addEventListener("click", (e) => {
+        let currentTicketColor=colorDiv.classList[1];
+        // Getting color index
+        
+        let currentTicketColorIdx = allColors.findIndex((color) => {
+            return currentTicketColor === color;
+        })
+        currentTicketColorIdx++;
+        let newTicketColorIdx = currentTicketColorIdx % allColors.length;
+        let newTicketColor = allColors[newTicketColorIdx];
+        colorDiv.classList.remove(currentTicketColor);
+        colorDiv.classList.add(newTicketColor);
+    })
+    
+    
+    
+}
 // Locking the ticket area so that editing will be custom.
 function handleLock(ticket){
     let lockElem=ticket.querySelector(".lock");
@@ -79,6 +102,31 @@ function handleLock(ticket){
         }
 
     })
+}
+
+// Deleting/ removing the tickets
+function deleteTicket(ticket){
+    let actionBtn=document.querySelector(".actionIcons");
+    let deleteBtn=actionBtn.children[1];
+    deleteBtn.addEventListener("click", (e) =>{
+        let deleteTarget=ticket.querySelector(".lock");
+        let deleteIcon=deleteTarget.children[0];
+        if(deleteIcon.classList.contains("fa-lock")){
+            deleteIcon.classList.remove("fa-lock");
+            deleteIcon.classList.add("fa-trash");
+            let remove=ticket.querySelector(".fa-trash");
+            remove.addEventListener("click", (e) => {
+                ticket.remove();
+            })
+
+        }
+        else{
+            deleteIcon.classList.remove("fa-trash");
+            deleteIcon.classList.add("fa-lock");
+        }
+    })
+    
+
 }
 
 
