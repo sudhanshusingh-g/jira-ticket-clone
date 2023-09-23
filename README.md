@@ -1,2 +1,8 @@
-- https://github.com/sudhanshusingh-g/jira-ticket-clone
-- https://sudhanshusingh-g.github.io/jira-ticket-clone/
+###Zeera- A ticket management tool
+## Learnings
+- HTML & CSS
+- DOM
+- Local Storage in Browser
+
+## URL
+https://sudhanshusingh-g.github.io/zeera-ticket-management/
