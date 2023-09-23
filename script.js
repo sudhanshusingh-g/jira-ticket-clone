@@ -17,6 +17,14 @@ let setColor =allColors[allColors.length - 1];
 let removeFlag = false;
 let ticketArr=[];
 
+if (localStorage.getItem("tickets")) {
+    // Retrieve and display tickets
+    ticketArr = JSON.parse(localStorage.getItem("tickets"));
+    ticketArr.forEach((ticketObj) => {
+        createTicket(ticketObj.ticketColor, ticketObj.taskValue, ticketObj.ticketID);
+    })
+}
+
 for(let i=0;i<filterColor.length;i++){
 
     filterColor[i].addEventListener("click",(e)=>{
@@ -111,20 +119,28 @@ function createTicket(ticketColor,taskValue,ticketID){
     // Pushing new ticket object in array
     if(!ticketID){
         ticketArr.push({ticketColor,taskValue,ticketID:id});
+        localStorage.setItem("tickets", JSON.stringify(ticketArr));
     } 
     
-    deleteTicket(ticket);
-    handleLock(ticket);
-    handleColor(ticket);
+    deleteTicket(ticket,id);
+    handleLock(ticket,id);
+    handleColor(ticket,id);
 }
 
 // Deleting/ removing the tickets
-function deleteTicket(ticket){
+function deleteTicket(ticket,id){
 
     ticket.addEventListener("click" ,(e) => {
-        if(removeFlag){
-            ticket.remove();
-        }
+        if (!removeFlag) return;
+
+        let idx = getTikcetIdx(id);
+
+        // DB removal
+        ticketArr.splice(idx, 1);
+        let strTicketsArr = JSON.stringify(ticketArr);
+        localStorage.setItem("tickets", strTicketsArr);
+        
+        ticket.remove(); //UI removal
     })
     
 
@@ -135,9 +151,11 @@ function deleteTicket(ticket){
 // Math.random did not worked out
 
 // So moving forward with for loop method
-function handleColor(ticket){
+function handleColor(ticket,id){
     let colorDiv=ticket.querySelector(".ticketColor");
     colorDiv.addEventListener("click", (e) => {
+        // Getting ticketIndex from the array
+        let ticketIdx=getTikcetIdx();
         let currentTicketColor=colorDiv.classList[1];
         // Getting color index
         
@@ -149,17 +167,22 @@ function handleColor(ticket){
         let newTicketColor = allColors[newTicketColorIdx];
         colorDiv.classList.remove(currentTicketColor);
         colorDiv.classList.add(newTicketColor);
+
+         // Modify data in localStorage (priority color change)
+         ticketArr[ticketIdx].ticketColor = newTicketColor;
+         localStorage.setItem("tickets", JSON.stringify(ticketArr));
     })
     
     
     
 }
 // Locking the ticket area so that editing will be custom.
-function handleLock(ticket){
+function handleLock(ticket,id){
     let lockElem=ticket.querySelector(".lock");
     let lockSwitch=lockElem.children[0];
     let ticketTaskArea=ticket.querySelector(".taskArea");
     lockSwitch.addEventListener("click" , (e) => {
+        let ticketIdx=getTikcetIdx();
         if(lockSwitch.classList.contains("fa-lock")){
             lockSwitch.classList.remove("fa-lock");
             lockSwitch.classList.add("fa-lock-open");
@@ -171,9 +194,21 @@ function handleLock(ticket){
             ticketTaskArea.setAttribute("contenteditable", "false");
         }
 
+        // Modify data in localStorage (Ticket Task)
+        ticketArr[ticketIdx].taskValue = ticketTaskArea.innerText;
+        localStorage.setItem("tickets", JSON.stringify(ticketArr));
+
     })
     
     
+}
+
+
+function getTikcetIdx(id) {
+    let ticketIdx = ticketArr.findIndex((ticketObj) => {
+        return ticketObj.ticketID === id;
+    })
+    return ticketIdx;
 }
 
 function setToDefault(){
