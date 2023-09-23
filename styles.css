@@ -21,16 +21,9 @@ header{
     align-items: center;
     gap: 4rem;
 }
-.color-flags button{
-    border: none;
-    cursor: pointer;
-}
-.color-flags button:hover{
-    border: 2px solid whitesmoke;
-}
-.color-flags button:active{
-    box-shadow: inset;
-}
+
+
+
 .color-flags{
     display: flex;
     justify-content: center;

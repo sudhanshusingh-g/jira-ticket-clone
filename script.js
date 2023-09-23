@@ -2,15 +2,59 @@ let addTicket=document.querySelector(".fa-plus");
 let modalConatiner=document.querySelector(".modalContainer");
 let mainTicketContainer=document.querySelector(".ticketContainer");
 let textArea=document.querySelector("#textArea");
+let removeBtn=document.querySelector(".fa-trash-can");
 
 // Get access of all priority colors
 let priorityColor=document.querySelectorAll(".priorityColor")
 
+let filterColor=document.querySelectorAll(".color");
+
+
 let allColors=["pink","green","yellow","black"];
 let setColor =allColors[allColors.length - 1];
 
-// Event Listener for modal priority coloring
 
+let removeFlag = false;
+let ticketArr=[];
+
+for(let i=0;i<filterColor.length;i++){
+
+    filterColor[i].addEventListener("click",(e)=>{
+        
+        let currFilterColor=filterColor[i].classList[1];
+        
+        let filterTicket=ticketArr.filter((ticketObj,idx) => {
+            return currFilterColor === ticketObj.ticketColor;
+        })
+
+        // Removal of previous ticket
+        let allTicket=document.querySelectorAll(".ticket");
+        for(let i=0; i<allTicket.length; i++){
+            allTicket[i].remove();
+        }
+
+        // Display new filtered tickets
+        filterTicket.forEach((ticketObj,idx)=>{
+            createTicket(ticketObj.ticketColor,ticketObj.taskValue,ticketObj.ticketID);
+        })
+    })
+
+    filterColor[i].addEventListener("dblclick", (e)=>{
+        let allTicket=document.querySelectorAll(".ticket");
+        for(let i=0; i<allTicket.length; i++){
+            allTicket[i].remove();
+        }
+        ticketArr.forEach((ticketObj,idx) => {
+        createTicket(ticketObj.ticketColor,ticketObj.taskValue,ticketObj.ticketID);
+
+        })
+    })
+    
+    
+
+
+}
+// Event Listener for modal priority coloring
 priorityColor.forEach((colorElem, idx) => {
     colorElem.addEventListener("click", (e) => {
         priorityColor.forEach((priorityColorElem, idx) => {
@@ -33,33 +77,59 @@ addTicket.addEventListener("click",(e) => {
     
 });
 
+
+removeBtn.addEventListener("click", (e) => {
+    removeFlag = !removeFlag;
+    
+})
+
 modalConatiner.addEventListener("keydown", (e) => {
     let key=e.key;
     if(key === "Enter"){
-        createTicket(setColor, textArea.value, shortid());
-        modalConatiner.classList.toggle("modalDisplay");
-        textArea.value="";
+        createTicket(setColor, textArea.value);
+        
+        setToDefault();
     }
 })
 
+
+
 // Creating a ticket and adding it in the main view.
 function createTicket(ticketColor,taskValue,ticketID){
+    let id=ticketID || shortid();
     let ticket=document.createElement("div");
     ticket.setAttribute("class","ticket");
     ticket.innerHTML=`
                 <div class="ticketColor ${ticketColor}"></div>
-                <div class="ticketId">#${ticketID}</div>
+                <div class="ticketId">#${id}</div>
                 <div class="taskArea">${taskValue}</div>
                 <div class="lock">
                     <i class="fa-solid fa-lock"></i>
                 </div>
     `;
     mainTicketContainer.appendChild(ticket);
+    // Pushing new ticket object in array
+    if(!ticketID){
+        ticketArr.push({ticketColor,taskValue,ticketID:id});
+    } 
     
     deleteTicket(ticket);
     handleLock(ticket);
     handleColor(ticket);
 }
+
+// Deleting/ removing the tickets
+function deleteTicket(ticket){
+
+    ticket.addEventListener("click" ,(e) => {
+        if(removeFlag){
+            ticket.remove();
+        }
+    })
+    
+
+}
+
 
 // When clicked on ticket color the color should be changed randomly : Use Math.random value
 // Math.random did not worked out
@@ -102,31 +172,19 @@ function handleLock(ticket){
         }
 
     })
+    
+    
 }
 
-// Deleting/ removing the tickets
-function deleteTicket(ticket){
-    let actionBtn=document.querySelector(".actionIcons");
-    let deleteBtn=actionBtn.children[1];
-    deleteBtn.addEventListener("click", (e) =>{
-        let deleteTarget=ticket.querySelector(".lock");
-        let deleteIcon=deleteTarget.children[0];
-        if(deleteIcon.classList.contains("fa-lock")){
-            deleteIcon.classList.remove("fa-lock");
-            deleteIcon.classList.add("fa-trash");
-            let remove=ticket.querySelector(".fa-trash");
-            remove.addEventListener("click", (e) => {
-                ticket.remove();
-            })
+function setToDefault(){
+    setColor =allColors[allColors.length - 1];
+    modalConatiner.classList.toggle("modalDisplay");
+    textArea.value="";
+    priorityColor.forEach((priorityColorElem, idx) => {
 
-        }
-        else{
-            deleteIcon.classList.remove("fa-trash");
-            deleteIcon.classList.add("fa-lock");
-        }
+            priorityColorElem.classList.remove("defaultBorder");
     })
-    
-
+    priorityColor[priorityColor.length - 1].classList.add("defaultBorder");
 }
 
 
