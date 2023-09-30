@@ -5,4 +5,4 @@
 - Local Storage in Browser
 
 ## URL
-https://sudhanshusingh-g.github.io/zeera-ticket-management/
+https://sudhanshusingh-g.github.io/ticket-management-tool/
